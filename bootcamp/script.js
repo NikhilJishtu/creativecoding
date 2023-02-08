@@ -1,4 +1,5 @@
 let scene, camera, renderer, cubes = [];
+let trailLength = 20; // number of previous positions to keep in the trail
 
 init();
 animate();
@@ -18,11 +19,11 @@ function init() {
     let geometry = new THREE.BoxGeometry(1, 1, 1);
     let material = new THREE.MeshLambertMaterial({ color:'pink' });
 
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 0; i < 500; i++) {
         let cube = new THREE.Mesh(geometry, material);
-        cube.position.x = (Math.random() * 100) -50;
-        cube.position.y = (Math.random() * 100) -50;
-        cube.position.z = (Math.random() * 100) -50;
+        cube.position.x = (Math.random() * 100) - 50;
+        cube.position.y = (Math.random() * 100) - 50;
+        cube.position.z = (Math.random() * 100) - 50;
         scene.add(cube);
         cubes.push(cube);
     }
@@ -36,8 +37,25 @@ function animate() {
     requestAnimationFrame(animate);
 
     for (let i = 0; i < cubes.length; i++) {
-        cubes[i].rotation.x += 0.05;
-        cubes[i].rotation.y += 0.1;
+        let cube = cubes[i];
+        cube.position.x += 0.1;
+        cube.position.y += 0.05;
+        cube.position.z += 0.05;
+        cube.rotation.x += 0.05;
+        cube.rotation.y += 0.1;
+
+        let trailGeometry = new THREE.BoxGeometry(1, 1, 1);
+        let trailMaterial = new THREE.MeshLambertMaterial({ color: 'pink', transparent: true, opacity: 0. });
+        let trail = new THREE.Mesh(trailGeometry, trailMaterial);
+        trail.position.copy(cube.position);
+        scene.add(trail);
+        cube.userData.trail = cube.userData.trail || [];
+        cube.userData.trail.push(trail);
+
+        if (cube.userData.trail.length > trailLength) {
+            let firstTrail = cube.userData.trail.shift();
+            scene.remove(firstTrail);
+        }
     }
 
     renderer.render(scene, camera);
