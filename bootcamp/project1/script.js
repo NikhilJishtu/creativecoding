@@ -61,15 +61,15 @@ function init() {
 
     let fontLoader = new FontLoader();
     fontLoader.load('../node_modules/three/examples/fonts/jfont.json', function (font) {
-      let textGeometry = new TextGeometry('ざざざ', {
+      let textGeometry = new TextGeometry('五\nコ\nー\nド', {
         font: font,
-        size: 2,
+        size: 2.1,
         height: 0.5
       });
       let textMaterial = new THREE.MeshBasicMaterial({ color: 'black' });
       let textMesh = new THREE.Mesh(textGeometry, textMaterial);
-      textMesh.position.x = -3;
-      textMesh.position.y = -0.6;
+      textMesh.position.x = -1.65;
+      textMesh.position.y = 4.5;
       textMesh.position.z = -5;
 
       scene.add(textMesh);
@@ -77,8 +77,8 @@ function init() {
 
   let shadowMaterial = new THREE.MeshBasicMaterial({ color: 'red' });
   let shadowMesh = new THREE.Mesh(textGeometry, shadowMaterial);
-  shadowMesh.position.x = -3;
-  shadowMesh.position.y = -1;
+  shadowMesh.position.x = -1.45;
+  shadowMesh.position.y = 4.5;
   shadowMesh.position.z = -5;
   scene.add(shadowMesh);
     });
@@ -107,5 +107,7 @@ function animate() {
             cubes[i].position.z = -50;
         }
     }
+
+    
     renderer.render(scene, camera);
 }
