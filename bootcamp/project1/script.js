@@ -15,10 +15,10 @@
 
         document.getElementById("container").appendChild(renderer.domElement);
 
-        let geometry = new THREE.BoxGeometry(1, 1, 1);
-        let material = new THREE.MeshLambertMaterial({ color:'pink' });
+        let geometry = new THREE.BoxGeometry(5, 0.05, 0.05);
+        let material = new THREE.MeshLambertMaterial({ color:'red' });
 
-        for (let i = 0; i < 5000; i++) {
+        for (let i = 0; i < 2500; i++) {
             let cube = new THREE.Mesh(geometry, material);
             cube.position.x = (Math.random() * 100) -50;
             cube.position.y = (Math.random() * 100) -50;
@@ -27,7 +27,7 @@
             cubes.push(cube);
         }
 
-        let light = new THREE.PointLight('purple', 2, 100);
+        let light = new THREE.PointLight('red', 200, 100);
         light.position.set(5, 5, 5);
         scene.add(light);
     }
@@ -35,12 +35,11 @@
     function animate() {
         requestAnimationFrame(animate);
         for (let i = 0; i < cubes.length; i++) {
-            cubes[i].position.x += 0.1;
-            cubes[i].position.y += 0.05;
+            cubes[i].position.x += 0.25;
+            cubes[i].position.y += 0.25;
             cubes[i].position.z += 0.05;
             
             cubes[i].rotation.x += 0.05;
-            cubes[i].rotation.y += 0.05;
 
 
             if(cubes[i].position.x > 50){
@@ -52,21 +51,7 @@
             if(cubes[i].position.z > 50){
                 cubes[i].position.z = -50;
             }
-        //console.log(cubes[i].position.x)
+
         }
         renderer.render(scene, camera);
     }
-
-    // function animate() {
-    //     requestAnimationFrame(animate);
-
-    //     for (let i = 0; i < cubes.length; i++) {
-    //         cubes[i].position.x += 0.1;
-    //         cubes[i].position.y += 0.05;
-    //         cubes[i].position.z += 0.05;
-    //         cubes[i].rotation.x += 0.05;
-    //         cubes[i].rotation.y += 0.1;
-    //     }
-
-    //     renderer.render(scene, camera);
-    // }
