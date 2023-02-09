@@ -68,15 +68,18 @@ function init() {
       });
       let textMaterial = new THREE.MeshBasicMaterial({ color: 'black' });
       let textMesh = new THREE.Mesh(textGeometry, textMaterial);
+      textMesh.position.x = -3;
+      textMesh.position.y = -0.6;
       textMesh.position.z = -5;
+
       scene.add(textMesh);
 
 
   let shadowMaterial = new THREE.MeshBasicMaterial({ color: 'red' });
   let shadowMesh = new THREE.Mesh(textGeometry, shadowMaterial);
+  shadowMesh.position.x = -3;
+  shadowMesh.position.y = -1;
   shadowMesh.position.z = -5;
-  shadowMesh.position.x = 0.1;
-  shadowMesh.position.y = -0.1;
   scene.add(shadowMesh);
     });
 }
