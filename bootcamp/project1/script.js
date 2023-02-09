@@ -23,6 +23,7 @@ import {
 }
 
 from '../node_modules/three/examples/jsm/geometries/TextGeometry.js'
+import { MathUtils } from 'three';
 
 let scene, camera, renderer, cubes = [];
 
@@ -49,6 +50,7 @@ function init() {
         cube.position.x = (Math.random() * 100) -50;
         cube.position.y = (Math.random() * 100) -50;
         cube.position.z = (Math.random() * 100) -50;
+
         scene.add(cube);
         cubes.push(cube);
     }
@@ -64,10 +66,18 @@ function init() {
         size: 2,
         height: 0.5
       });
-      let textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      let textMaterial = new THREE.MeshBasicMaterial({ color: 'black' });
       let textMesh = new THREE.Mesh(textGeometry, textMaterial);
       textMesh.position.z = -5;
       scene.add(textMesh);
+
+
+  let shadowMaterial = new THREE.MeshBasicMaterial({ color: 'red' });
+  let shadowMesh = new THREE.Mesh(textGeometry, shadowMaterial);
+  shadowMesh.position.z = -5;
+  shadowMesh.position.x = 0.1;
+  shadowMesh.position.y = -0.1;
+  scene.add(shadowMesh);
     });
 }
 
@@ -77,20 +87,22 @@ function animate() {
         cubes[i].position.x += 0.25;
         cubes[i].position.y += 0.25;
         cubes[i].position.z += 0.05;
-        
+    
+        cubes[i].rotation.x = THREE.MathUtils.degToRad(-60);
+        cubes[i].rotation.y = THREE.MathUtils.degToRad(-45);
+        cubes[i].rotation.z = THREE.MathUtils.degToRad(15);
+    
         cubes[i].rotation.x += 0.05;
-
-
-        if(cubes[i].position.x > 50){
+    
+        if (cubes[i].position.x > 50) {
             cubes[i].position.x = -50;
         }
-        if(cubes[i].position.y > 50){
+        if (cubes[i].position.y > 50) {
             cubes[i].position.y = -50;
         }
-        if(cubes[i].position.z > 50){
+        if (cubes[i].position.z > 50) {
             cubes[i].position.z = -50;
         }
-
     }
     renderer.render(scene, camera);
 }
